@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body ng-app="app" >
+	<div ng-controller="myCtrl">
+		<input type="text" ng-model="userInfo.username"/>
+		<input type="text" ng-model="userInfo.useremail"/>
+		<input type="text" ng-model="userInfo.password"/>
+		<button ng-click="update()">signup</button>
+	</div>
+	<div ng-controller="myCtrl01">
+		<input type="text" ng-model="userInfo.username"/>
+		<input type="text" ng-model="userInfo.password"/>
+		<button ng-click="signIn()">signin</button>
+	</div>
+	<script type="text/javascript" src="./js/angular.min.js"></script>
+	<script type="text/javascript">
+		let app = angular.module('app',[]);
+		app.controller('myCtrl', ['$scope', '$http', function ($scope, $http) {
+			$scope.userInfo = {
+				username: '',
+				useremail: '',
+				password: ''
+			}
+
+			$scope.update = function () {
+				$http({
+					method: 'post',
+					url: '/signup/',
+					data: $scope.userInfo,
+					dataType: 'json'
+				}).success(function (data) {
+					console.log(data);
+					//window.location.reload();
+				})
+			}
+		}]);
+		app.controller('myCtrl01', ['$scope', '$http', function ($scope, $http) {
+			$scope.userInfo = {
+				username: '',
+				password: ''
+			}
+
+			$scope.signIn = function () {
+				$http({
+					method: 'post',
+					url: '/signin/',
+					data: $scope.userInfo,
+					dataType: 'json'
+				}).success(function (data) {
+					console.log(data);
+					//window.location.reload();
+				})
+			}
+		}])
+	</script>
+</body>
+</html>
